@@ -1,0 +1,26 @@
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        google()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        mavenCentral()
+        google()
+    }
+}
+rootProject.name = "Modular Android"
+include ':playstore_mobile'
+include ':views_base'
+include ':views_mobile'
+include ':playstore_base'
+include ':playstore_tv'
+include ':views_tv'
+include ':m_vm'
+include ':huawei_mobile'
+include ':m_vm_playservices'
+include ':huawei_base'
+include ':samsung_mobile'

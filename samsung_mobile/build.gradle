@@ -1,0 +1,4 @@
+dependencies {
+    api project(":views_mobile")
+    api project(':m_vm_playservices')
+}

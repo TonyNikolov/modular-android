@@ -1,0 +1,149 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    id 'com.android.application' version '7.1.0' apply false
+    id 'com.android.library' version '7.1.0' apply false
+    id 'org.jetbrains.kotlin.android' version '1.5.30' apply false
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+subprojects {
+    switch (it.name) {
+        case "m_vm":
+            apply plugin: 'com.android.library'
+            apply plugin: 'org.jetbrains.kotlin.android'
+            apply plugin: 'kotlin-kapt'
+            applyAndroidBaseConfiguration(it)
+            break
+
+        case "m_vm_playservices":
+            apply plugin: 'com.android.library'
+            apply plugin: 'org.jetbrains.kotlin.android'
+            applyAndroidBaseConfiguration(it)
+            break
+
+        case "views_base":
+            apply plugin: 'com.android.library'
+            apply plugin: 'org.jetbrains.kotlin.android'
+            applyAndroidBaseConfiguration(it)
+            break
+
+        case "views_mobile":
+            apply plugin: 'com.android.library'
+            apply plugin: 'org.jetbrains.kotlin.android'
+            apply plugin: 'kotlin-kapt'
+            applyAndroidBaseConfiguration(it)
+            break
+
+        case "views_tv":
+            apply plugin: 'com.android.library'
+            apply plugin: 'org.jetbrains.kotlin.android'
+            applyAndroidBaseConfiguration(it)
+            break
+
+        case "playstore_mobile":
+            apply plugin: 'com.android.application'
+            apply plugin: 'org.jetbrains.kotlin.android'
+            applyAndroidBaseConfiguration(it)
+            applyAndroidApplication(it, "com.android.modular.playstore")
+            break
+
+        case "playstore_tv":
+            apply plugin: 'com.android.application'
+            apply plugin: 'org.jetbrains.kotlin.android'
+            applyAndroidBaseConfiguration(it)
+            applyAndroidApplication(it, "com.android.modular.playstore")
+            break
+
+        case "huawei_base":
+            apply plugin: 'com.android.library'
+            apply plugin: 'org.jetbrains.kotlin.android'
+            applyAndroidBaseConfiguration(it)
+            break
+
+        case "huawei_mobile":
+            apply plugin: 'com.android.application'
+            apply plugin: 'org.jetbrains.kotlin.android'
+            applyAndroidBaseConfiguration(it)
+            applyAndroidApplication(it, "com.android.modular.huawei")
+            break
+
+        case "samsung_mobile":
+            apply plugin: 'com.android.application'
+            apply plugin: 'org.jetbrains.kotlin.android'
+            applyAndroidBaseConfiguration(it)
+            applyAndroidApplication(it, "com.android.modular.samsung")
+            break
+    }
+}
+
+def applyAndroidBaseConfiguration(project) {
+    project.android {
+        compileSdkVersion 32
+
+        defaultConfig {
+            minSdkVersion 21
+            targetSdkVersion 32
+
+            versionCode 1
+            versionName "1.0.0"
+
+            vectorDrawables.useSupportLibrary = true
+            multiDexEnabled true
+        }
+
+        buildFeatures {
+            viewBinding true
+        }
+
+        buildTypes {
+            debug {
+                debuggable true
+                ext.enableCrashlytics = false
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            }
+
+            release {
+                debuggable true
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            }
+        }
+
+        lintOptions {
+            checkReleaseBuilds false
+            // Or, if you prefer, you can continue to check for errors in release builds,
+            // but continue the build even when errors are found:
+            abortOnError true
+        }
+
+        sourceSets {
+            main.java.srcDirs += 'src/main/kotlin'
+        }
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+        kotlinOptions {
+            jvmTarget = '1.8'
+        }
+    }
+}
+
+def applyAndroidApplication(project, packageId) {
+    project.android {
+        defaultConfig {
+            applicationId packageId
+        }
+
+        buildTypes {
+            release {
+                shrinkResources false
+            }
+        }
+    }
+}

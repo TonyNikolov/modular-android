@@ -1,0 +1,4 @@
+<resources>
+
+    <style name="Theme.ModularAndroid" parent="@style/Theme.Leanback" />
+</resources>
